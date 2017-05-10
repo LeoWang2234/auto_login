@@ -1,0 +1,1 @@
+curl -H 'Host: 172.20.3.81:801' --data "action=login&username=Y30150635@free&password={B}d2FuZ2NoZW5n&ac_id=3&user_ip=172.21.195.123&nas_ip=&user_mac=f0:e8:4d:8b:70:35&ajax=1" --compressed 'http://172.20.3.81:801/include/auth_action.php'
