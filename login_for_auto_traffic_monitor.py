@@ -31,37 +31,18 @@ def restart_lantern_and_relogin():
 # 修改Mac地址
 # 拿到脚本的输出值
 def alter_mac_and_relogin():
-	print("确实要修改Mac地址吗？还有流量未用完，请杜绝浪费")
-	print('修改请输入 yes ,只是重启蓝灯并重新登录请输入 no ,任意键退出')
-	answer = str(raw_input("请输入你的决定："))
-	# print(answer)
-	if answer!='yes' and answer!='no':
-		answer='exit'
-	# 确定修改时
-	# print(answer)
-	if answer=='yes':
-		# print("条件为真")
-		# return
-		status = os.popen('./mac_script.sh').read()
-		mac_list = status.split('\n')
+	status = os.popen('./mac_script.sh').read()
+	mac_list = status.split('\n')
 
-		new_mac = mac_list[0]
-		mac_in_use = mac_list[1][6:]
+	new_mac = mac_list[0]
+	mac_in_use = mac_list[1][6:]
 
-		if new_mac==mac_in_use:
-			restart_lantern_and_relogin()
-		else:
-			print("mac 地址修改失败")
-			print('  new_mac  = ' + new_mac)
-			print('mac_in_use = ' + mac_in_use)
-	# 重新登录并重启蓝灯
-	elif answer=='no':
-		# print('你输入的是no')
+	if new_mac==mac_in_use:
 		restart_lantern_and_relogin()
-	elif answer=='exit':
-		print("程序退出")
-		sys.exit(0)
-		return
+	else:
+		print("mac 地址修改失败")
+		print('  new_mac  = ' + new_mac)
+		print('mac_in_use = ' + mac_in_use)
 
 if __name__=='__main__':
 	alter_mac_and_relogin()

@@ -5,7 +5,7 @@
 '''
 import urllib2
 import requests
-import time
+import my_sleep_time as time
 from bs4 import BeautifulSoup
 url = 'http://login.ecust.edu.cn/&arubalp=07ab5286-6c88-4ee7-997d-1563e8afb4'
 
@@ -19,6 +19,7 @@ def login_ten_times():
 		if state == 'success' or state == 'already_login':
 			return state
 		else:
+			print('正在尝试重新登录....')
 			time.sleep(5)
 			continue
 	return state
@@ -26,7 +27,7 @@ def get_response(url):
 	response = ''
 	try:
 		request = urllib2.Request(url)
-		response = urllib2.urlopen(request)
+		response = urllib2.urlopen(request,timeout=5)
 	except Exception as e:
 		print('获取response失败')
 	return response
@@ -42,7 +43,9 @@ def auto_login():
 
 	# 用户已经登陆啦，直接返回
 	if(re_url.find('mac')==-1):
-		print("yong hu yi deng lu")
+		print("       *****************")
+		print("       **..用户已在线..*")
+		print("       *****************")
 		return 'already_login'
 	# 用户还没用登陆，执行登陆逻辑
 	# 将地址分割为字典的形式
@@ -52,8 +55,8 @@ def auto_login():
 	ip = dictionary.get('ip')
 	mac = dictionary.get('mac')
 
-	print('mac = ' + mac)
-	print('ip = ' + ip)
+	# print('mac = ' + mac)
+	# print('ip = ' + ip)
 
 	# 构造登陆请求
 	login_url = "http://172.20.3.81:801/include/auth_action.php"
@@ -62,10 +65,12 @@ def auto_login():
 	
 	try:
 		post = requests.post(login_url,headers=headers,data=post_data)
-		print('success')
+		print("       *****************")
+		print("       **..登 录 成 功.*")
+		print("       *****************")
 		return('success')
 	except Exception as e:
-		print('尝试登录失败')
+		print('尝试登录失败.......')
 		pass
 
 if __name__ == '__main__':
